@@ -1,0 +1,57 @@
+name: Build
+
+on:
+  push:
+    tags:
+      - "**"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Lazarus
+      run: |
+        # Install Lazarus 2.2.2
+        choco install lazarus --version=2.2.2 - y
+        # Install cross-compilation add-on
+        choco install fpc-src -y
+        choco install fpc -y
+
+    - name: Build with Lazarus
+      run: |
+        # Commands to build with Lazarus on Windows
+        lazbuild cheatengine.lpi
+        lazbuild speedhack.lpr
+        lazbuild luaclient.lpr
+        lazbuild DirectXMess.sln
+        lazbuild DotNetcompiler.sln
+        lazbuild monodatacollector.sln
+        lazbuild dotnetdatacollector.sln
+        lazbuild dotnetinvasivedatacollector.sln
+        lazbuild cejvmti.sln
+        lazbuild tcclib.sln
+        lazbuild vehdebug.lpr
+        lazbuild dbkkernel.sln
+
+    - name: Archive build artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: CheatEngine-build
+        path: |
+          CheatEngine/bin
+          CheatEngine/CheatEngine/bin
+          CheatEngine/CheatEngine/speedhack/bin
+          CheatEngine/CheatEngine/luaclient/bin
+          CheatEngine/CheatEngine/DirectXMess/bin
+          CheatEngine/CheatEngine/DotNetcompiler/bin
+          CheatEngine/CheatEngine/monodatacollector/bin
+          CheatEngine/CheatEngine/dotnetdatacollector/bin
+          CheatEngine/CheatEngine/dotnetinvasivedatacollector/bin
+          CheatEngine/CheatEngine/cejvmti/bin
+          CheatEngine/CheatEngine/tcclib/bin
+          CheatEngine/CheatEngine/vehdebug/bin
+          CheatEngine/CheatEngine/dbkkernel/bin
