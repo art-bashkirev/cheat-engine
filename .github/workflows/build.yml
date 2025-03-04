@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Lazarus
       run: |
@@ -26,33 +26,11 @@ jobs:
       run: |
         # Commands to build with Lazarus on Windows
         lazbuild cheatengine.lpi
-        lazbuild speedhack.lpr
-        lazbuild luaclient.lpr
-        lazbuild DirectXMess.sln
-        lazbuild DotNetcompiler.sln
-        lazbuild monodatacollector.sln
-        lazbuild dotnetdatacollector.sln
-        lazbuild dotnetinvasivedatacollector.sln
-        lazbuild cejvmti.sln
-        lazbuild tcclib.sln
-        lazbuild vehdebug.lpr
-        lazbuild dbkkernel.sln
 
     - name: Archive build artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: CheatEngine-build
         path: |
           CheatEngine/bin
           CheatEngine/CheatEngine/bin
-          CheatEngine/CheatEngine/speedhack/bin
-          CheatEngine/CheatEngine/luaclient/bin
-          CheatEngine/CheatEngine/DirectXMess/bin
-          CheatEngine/CheatEngine/DotNetcompiler/bin
-          CheatEngine/CheatEngine/monodatacollector/bin
-          CheatEngine/CheatEngine/dotnetdatacollector/bin
-          CheatEngine/CheatEngine/dotnetinvasivedatacollector/bin
-          CheatEngine/CheatEngine/cejvmti/bin
-          CheatEngine/CheatEngine/tcclib/bin
-          CheatEngine/CheatEngine/vehdebug/bin
-          CheatEngine/CheatEngine/dbkkernel/bin
